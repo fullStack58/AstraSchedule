@@ -1,0 +1,22 @@
+{
+  "name": "astra-schedule-api",
+  "version": "1.0.0",
+  "description": "AstraSchedule — REST API sobre el motor de horarios UNIAJC",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "dev":   "node --watch src/server.js",
+    "start": "node src/server.js",
+    "lint":  "eslint src/**/*.js"
+  },
+  "dependencies": {
+    "cors":       "^2.8.5",
+    "dotenv":     "^16.6.1",
+    "express":    "^5.1.0",
+    "groq-sdk":   "^1.2.0",
+    "helmet":     "^8.0.0",
+    "morgan":     "^1.10.0",
+    "pg":         "^8.21.0",
+    "zod":        "^3.24.0"
+  }
+}
