@@ -1,22 +1,25 @@
 {
-  "name": "uniajc-horarios",
-  "version": "0.1.0",
-  "description": "Agente de Optimización de Horarios — Facultad de Ingeniería UNIAJC (capa de datos PostgreSQL)",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "db:setup": "node scripts/setup-db.js",
-    "db:reset": "node scripts/setup-db.js --drop",
-    "seed:periodos": "node seed/seed-periodos.js",
-    "seed:reglas": "node seed/seed-reglas.js",
-    "seed:horarios": "node seed/seed-horarios.js",
-    "seed:all": "node seed/seed-periodos.js && node seed/seed-reglas.js && node seed/seed-horarios.js",
-    "validate": "node scripts/validate-integrity.js",
-    "bootstrap": "npm run db:reset && npm run seed:all && npm run validate"
-  },
-  "dependencies": {
-    "dotenv": "^16.6.1",
-    "groq-sdk": "^1.2.0",
-    "pg": "^8.21.0"
-  }
+	"name": "uniajc-horarios",
+	"version": "0.1.0",
+	"description": "Agente de Optimización de Horarios — Facultad de Ingeniería UNIAJC (capa de datos PostgreSQL)",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"db:setup": "node scripts/setup-db.js",
+		"db:reset": "node scripts/setup-db.js --drop",
+		"seed:periodos": "node seed/seed-periodos.js",
+		"seed:reglas": "node seed/seed-reglas.js",
+		"seed:horarios": "node seed/seed-horarios.js",
+		"seed:all": "node seed/seed-periodos.js && node seed/seed-reglas.js && node seed/seed-horarios.js",
+		"validate": "node scripts/validate-integrity.js",
+		"bootstrap": "npm run db:reset && npm run seed:all && npm run validate",
+		"check:db": "node scripts/check-connection.js",
+		"seed:excel": "node seed/seed-from-excel.js"
+	},
+	"dependencies": {
+		"dotenv": "^16.6.1",
+		"groq-sdk": "^1.2.0",
+		"pg": "^8.21.0",
+		"xlsx": "^0.18.5"
+	}
 }
