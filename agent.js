@@ -90,24 +90,6 @@ const functionDefinitions = [
 
         }
     },
-    {
-        type: "function",
-        function: {
-            name: "listar_horarios_asignados",
-            description: "Lista los horarios que ya han sido asignados (estado propuesto, confirmado o conflicto) para un programa, jornada, modalidad y sede. Útil cuando el usuario pide 'muéstrame los horarios que se asignaron' o 'lista los horarios propuestos'.",
-            parameters: {
-                type: "object",
-                properties: {
-                    programa_id: { type: "string", description: "Código del programa (IS o IE)" },
-                    jornada: { type: "string", enum: ["Diurna", "Nocturna"] },
-                    modalidad: { type: "string", enum: ["presencial", "virtual"] },
-                    sede: { type: "string", description: "Opcional. Sede si modalidad=presencial" },
-                    estado: { type: "string", enum: ["propuesto", "confirmado", "conflicto", "todos"], description: "Filtro por estado. Por defecto 'propuesto'." }
-                },
-                required: ["programa_id", "jornada", "modalidad"]
-            }
-        }
-    }
     // Agrega aquí el resto de las funciones (proponerHorario, detectarConflictos, etc.)
 ];
 

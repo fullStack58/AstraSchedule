@@ -14,3 +14,15 @@ export { detectar_conflictos_bloque } from './generacion/detectar_conflictos_blo
 // Notificaciones
 export { notificar_docente } from './notificaciones/notificar_docente.js';
 export { notificar_director } from './notificaciones/notificar_director.js';
+
+// Gestión 
+export { enviar_formato_prematricula } from './gestion/enviar_formato_prematricula.js';
+export { procesar_respuesta_director_prematricula } from './gestion/procesar_respuesta_director_prematricula.js';
+export { aprobar_prematricula } from './gestion/aprobar_prematricula.js';
+export { enviar_solicitud_matricula } from './gestion/enviar_solicitud_matricula.js';
+export { procesar_contrapropuesta_docente } from './gestion/procesar_contrapropuesta_docente.js';
+export { generar_alternativa_negociacion } from './gestion/generar_alternativa_negociacion.js';
+export { bloquear_horario_definitivo } from './gestion/bloquear_horario_definitivo.js';
+
+// Reportes 
+export { generar_reporte_horario } from './reportes/generar_reporte_horario.js';
