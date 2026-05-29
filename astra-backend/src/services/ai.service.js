@@ -37,7 +37,7 @@ export const functionDefinitions = [
           semestre:    { type: 'array', items: { type: 'integer' } },
           sede:        { type: 'string' },
         },
-        required: ['programa_id', 'jornada', 'semestre'],
+        required: ['programa_id', 'jornada'],
       },
     },
   },
@@ -66,7 +66,7 @@ export const functionDefinitions = [
       parameters: {
         type: 'object',
         properties: {
-          docente_id: { type: 'integer', description: 'ID numérico del docente.' },
+          docente_id: { type: 'integer', description: 'ID numérico del docente. Debe ser un número entero, ejemplo: 1, 2, 3.' },
         },
         required: ['docente_id'],
       },
@@ -135,6 +135,7 @@ export const functionDefinitions = [
         properties: {
           horario_id: { type: 'integer', description: 'Opcional. Si se omite, analiza todos.' },
         },
+        required: [],
       },
     },
   },

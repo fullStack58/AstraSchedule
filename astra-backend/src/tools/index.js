@@ -1,12 +1,16 @@
-// src/tools/index.js
-// Proxy que re-exporta todas las funciones del tools/index.js original.
-// Permite que ai.service.js las importe sin modificar el proyecto base.
+import {
+  obtener_resumen_estado,
+  listar_grupos_sin_horario,
+  obtener_aulas_disponibles,
+  asignar_clase,
+  proponer_horario,
+  generar_horarios_pendientes,
+} from "../../../tools/index.js";
 
-// NOTA: Ajusta la ruta relativa según dónde clone el frontend respecto al backend.
-// Si el backend REST vive dentro del mismo repo en /backend/, la ruta sería:
-//   export * from '../../../tools/index.js';
-// Si es un repo separado con symlink o copia:
-//   export * from '../../../tools/index.js';
-
-// Para el entorno de desarrollo actual (backend en carpeta hermana del raíz):
-export * from "../../../tools/index.js";
+export const obtenerResumenEstado        = obtener_resumen_estado;
+export const listarGruposSinHorario      = listar_grupos_sin_horario;
+export const obtenerAulasDisponibles     = obtener_aulas_disponibles;
+export const asignarClase                = asignar_clase;
+export const proponerHorario             = proponer_horario;
+export const detectarConflictos          = generar_horarios_pendientes;
+export const generarDashboard            = generar_horarios_pendientes;
