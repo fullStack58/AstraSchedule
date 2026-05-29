@@ -17,6 +17,7 @@ import { gruposRouter, materiasRouter } from './routes/grupos.routes.js';
 import conflictosRouter from './routes/conflictos.routes.js';
 import dashboardRouter  from './routes/dashboard.routes.js';
 import aiRouter         from './routes/ai.routes.js';
+import schedulingRouter from './routes/scheduling.routes.js';
 
 // ── App ───────────────────────────────────────────────────────────────────────
 const app  = express();
@@ -51,6 +52,7 @@ app.use('/api/grupos',     gruposRouter);
 app.use('/api/materias',   materiasRouter);
 app.use('/api/conflictos', conflictosRouter);
 app.use('/api/ai',         aiRouter);
+app.use('/api/scheduling', schedulingRouter);
 
 // 404 para rutas no definidas
 app.use((_req, res) => {

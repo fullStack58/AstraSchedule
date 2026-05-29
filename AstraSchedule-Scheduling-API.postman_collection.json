@@ -1,0 +1,217 @@
+{
+  "info": {
+    "_postman_id": "astra-schedule-api-v1",
+    "name": "AstraSchedule Scheduling API",
+    "description": "Colección de endpoints para probar el motor de asignación de horarios",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "BD Integration",
+      "item": [
+        {
+          "name": "1. Get Active Period",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3001/api/scheduling/periodo-activo",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["api", "scheduling", "periodo-activo"]
+            },
+            "description": "Obtiene el período académico activo"
+          },
+          "response": []
+        },
+        {
+          "name": "2. Get BD Data by Period",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3001/api/scheduling/datos-bd/3",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["api", "scheduling", "datos-bd", "3"]
+            },
+            "description": "Obtiene todos los datos (grupos, docentes, salones, franjas) para un período"
+          },
+          "response": []
+        },
+        {
+          "name": "3. Generate Schedule (GREEDY - No Save)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3001/api/scheduling/generate-db?periodoId=3&estrategia=greedy&guardar=false",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["api", "scheduling", "generate-db"],
+              "query": [
+                {
+                  "key": "periodoId",
+                  "value": "3"
+                },
+                {
+                  "key": "estrategia",
+                  "value": "greedy"
+                },
+                {
+                  "key": "guardar",
+                  "value": "false"
+                }
+              ]
+            },
+            "description": "Genera horarios con estrategia GREEDY sin guardar en BD (solo visualización)"
+          },
+          "response": []
+        },
+        {
+          "name": "3b. Generate Schedule (BACKTRACKING - No Save)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3001/api/scheduling/generate-db?periodoId=3&estrategia=backtracking&guardar=false",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["api", "scheduling", "generate-db"],
+              "query": [
+                {
+                  "key": "periodoId",
+                  "value": "3"
+                },
+                {
+                  "key": "estrategia",
+                  "value": "backtracking"
+                },
+                {
+                  "key": "guardar",
+                  "value": "false"
+                }
+              ]
+            },
+            "description": "Genera horarios con estrategia BACKTRACKING (más lento, mejor resultado ~90%)"
+          },
+          "response": []
+        },
+        {
+          "name": "4. Generate Schedule (GREEDY - Save to BD)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3001/api/scheduling/generate-db?periodoId=3&estrategia=greedy&guardar=true",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["api", "scheduling", "generate-db"],
+              "query": [
+                {
+                  "key": "periodoId",
+                  "value": "3"
+                },
+                {
+                  "key": "estrategia",
+                  "value": "greedy"
+                },
+                {
+                  "key": "guardar",
+                  "value": "true"
+                }
+              ]
+            },
+            "description": "Genera horarios y guarda en BD"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Manual Input",
+      "item": [
+        {
+          "name": "1. Generate Schedule (Manual)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"grupos\": [\n    {\n      \"id\": 1,\n      \"nombre\": \"IS-101 - Grupo A\",\n      \"materia_codigo\": \"IS-101\",\n      \"jornada\": \"Diurna\",\n      \"modalidad\": \"presencial\",\n      \"sede_codigo\": \"NORTE\",\n      \"cupo_max\": 30,\n      \"cupo_estimado\": 10,\n      \"tipo_aula_requerida\": \"presencial\",\n      \"prioridad\": 1\n    },\n    {\n      \"id\": 2,\n      \"nombre\": \"IS-102 - Grupo A\",\n      \"materia_codigo\": \"IS-102\",\n      \"jornada\": \"Diurna\",\n      \"modalidad\": \"presencial\",\n      \"sede_codigo\": \"NORTE\",\n      \"cupo_max\": 30,\n      \"cupo_estimado\": 8,\n      \"tipo_aula_requerida\": \"presencial\",\n      \"prioridad\": 2\n    }\n  ],\n  \"docentes\": [\n    {\n      \"id\": 1,\n      \"nombre\": \"Juan García\",\n      \"disponibilidad\": \"Ambas\",\n      \"carga_max_horas\": 20,\n      \"horas_asignadas\": 0\n    },\n    {\n      \"id\": 2,\n      \"nombre\": \"María López\",\n      \"disponibilidad\": \"Ambas\",\n      \"carga_max_horas\": 20,\n      \"horas_asignadas\": 0\n    }\n  ],\n  \"salones\": [\n    {\n      \"id\": 1,\n      \"codigo\": \"N-001\",\n      \"tipo\": \"presencial\",\n      \"capacidad\": 30,\n      \"sede_codigo\": \"NORTE\"\n    },\n    {\n      \"id\": 2,\n      \"codigo\": \"N-002\",\n      \"tipo\": \"presencial\",\n      \"capacidad\": 30,\n      \"sede_codigo\": \"NORTE\"\n    }\n  ],\n  \"franjas\": [\n    {\n      \"id\": 1,\n      \"dia\": \"Lunes\",\n      \"jornada\": \"Diurna\",\n      \"hora_inicio\": \"07:00\",\n      \"hora_fin\": \"10:00\"\n    },\n    {\n      \"id\": 2,\n      \"dia\": \"Martes\",\n      \"jornada\": \"Diurna\",\n      \"hora_inicio\": \"07:00\",\n      \"hora_fin\": \"10:00\"\n    }\n  ],\n  \"reglas\": {\n    \"permitir_clases_consecutivas\": true,\n    \"requiere_paz_y_salvo\": false,\n    \"validar_prerequisitos\": true\n  }\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/scheduling/generate",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["api", "scheduling", "generate"]
+            },
+            "description": "Genera horarios con datos manuales/hardcodeados"
+          },
+          "response": []
+        },
+        {
+          "name": "2. Validate Schedule",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"grupos\": [\n    {\n      \"id\": 1,\n      \"nombre\": \"IS-101 - Grupo A\",\n      \"materia_codigo\": \"IS-101\",\n      \"jornada\": \"Diurna\",\n      \"modalidad\": \"presencial\",\n      \"sede_codigo\": \"NORTE\",\n      \"cupo_max\": 30,\n      \"cupo_estimado\": 10,\n      \"tipo_aula_requerida\": \"presencial\",\n      \"prioridad\": 1\n    }\n  ],\n  \"docentes\": [\n    {\n      \"id\": 1,\n      \"nombre\": \"Juan García\",\n      \"disponibilidad\": \"Ambas\",\n      \"carga_max_horas\": 20,\n      \"horas_asignadas\": 0\n    }\n  ],\n  \"salones\": [\n    {\n      \"id\": 1,\n      \"codigo\": \"N-001\",\n      \"tipo\": \"presencial\",\n      \"capacidad\": 30,\n      \"sede_codigo\": \"NORTE\"\n    }\n  ],\n  \"franjas\": [\n    {\n      \"id\": 1,\n      \"dia\": \"Lunes\",\n      \"jornada\": \"Diurna\",\n      \"hora_inicio\": \"07:00\",\n      \"hora_fin\": \"10:00\"\n    }\n  ],\n  \"reglas\": {\n    \"permitir_clases_consecutivas\": true,\n    \"requiere_paz_y_salvo\": false,\n    \"validar_prerequisitos\": true\n  }\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/scheduling/validate",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["api", "scheduling", "validate"]
+            },
+            "description": "Valida estructura de datos sin procesar"
+          },
+          "response": []
+        },
+        {
+          "name": "3. Schedule Single Group",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"grupo\": {\n    \"id\": 1,\n    \"nombre\": \"IS-101 - Grupo A\",\n    \"materia_codigo\": \"IS-101\",\n    \"jornada\": \"Diurna\",\n    \"modalidad\": \"presencial\",\n    \"sede_codigo\": \"NORTE\",\n    \"cupo_max\": 30,\n    \"cupo_estimado\": 10,\n    \"tipo_aula_requerida\": \"presencial\",\n    \"prioridad\": 1\n  },\n  \"docentes\": [\n    {\n      \"id\": 1,\n      \"nombre\": \"Juan García\",\n      \"disponibilidad\": \"Ambas\",\n      \"carga_max_horas\": 20,\n      \"horas_asignadas\": 0\n    }\n  ],\n  \"salones\": [\n    {\n      \"id\": 1,\n      \"codigo\": \"N-001\",\n      \"tipo\": \"presencial\",\n      \"capacidad\": 30,\n      \"sede_codigo\": \"NORTE\"\n    }\n  ],\n  \"franjas\": [\n    {\n      \"id\": 1,\n      \"dia\": \"Lunes\",\n      \"jornada\": \"Diurna\",\n      \"hora_inicio\": \"07:00\",\n      \"hora_fin\": \"10:00\"\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/scheduling/group",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["api", "scheduling", "group"]
+            },
+            "description": "Asigna horario a un grupo individual"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
