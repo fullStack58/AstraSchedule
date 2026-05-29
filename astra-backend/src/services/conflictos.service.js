@@ -1,6 +1,18 @@
 // src/services/conflictos.service.js
-
 import { pool } from '../config/db.js';
+
+// Importaciones de los repositorios de tu compañera (Módulo 6)
+import {
+  detectarCargaExcedida,
+  detectarPrerequisitos,
+  registrarConflicto,
+  obtenerConflictos
+} from '../repositories/conflictos.repository.js';
+
+
+// ==========================================
+// FUNCIONES ORIGINALES DEL PROYECTO
+// ==========================================
 
 export async function getAllConflictos({ resuelto, tipo, limit = 50 }) {
   const { rows } = await pool.query(
@@ -53,7 +65,6 @@ export async function getResumenConflictos() {
   return rows[0];
 }
 
-/** Detecta conflictos ejecutando las mismas reglas que los triggers */
 export async function detectarConflictosActivos() {
   const { rows } = await pool.query(
     `-- Aulas solapadas: mismo salón, misma franja, distinto grupo
@@ -100,4 +111,37 @@ export async function detectarConflictosActivos() {
      HAVING SUM(EXTRACT(EPOCH FROM (b.hora_fin - b.hora_inicio))/3600) > d.carga_max_horas`
   );
   return rows;
+}
+
+
+// ==========================================
+// NUEVAS FUNCIONES INTEGRADAS (MÓDULO 6)
+// ==========================================
+
+export async function analizarCargaExcedida() {
+  const conflictos = await detectarCargaExcedida();
+
+  for (const conflicto of conflictos) {
+    await registrarConflicto({
+      tipo: "carga_docente_excedida",
+      descripcion: `El docente ${conflicto.nombre} tiene ${conflicto.horas_asignadas} horas asignadas, superando su límite de ${conflicto.carga_max_horas}.`,
+    });
+  }
+  return conflictos;
+}
+
+export async function analizarPrerequisitos() {
+  const conflictos = await detectarPrerequisitos();
+
+  for (const conflicto of conflictos) {
+    await registrarConflicto({
+      tipo: "prerequisito_no_cumplido",
+      descripcion: `El estudiante ${conflicto.nombre} no cumple con el prerrequisito '${conflicto.prerequisito}' para ver la materia '${conflicto.materia}'.`,
+    });
+  }
+  return conflictos;
+}
+
+export async function obtenerAuditoria() {
+  return await obtenerConflictos();
 }
